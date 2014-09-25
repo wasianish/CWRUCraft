@@ -7,6 +7,8 @@ public class PlayerData {
 	private String password;
 	public String name;
 	public boolean isFinal = false;
+	public String major;
+	public int year;
 	
 	public PlayerData (String nam) {
 		name = nam;

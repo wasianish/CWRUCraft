@@ -78,6 +78,10 @@ public class CWRUCraft extends JavaPlugin {
 		return true;
 	}
 	
+	public static String getNewPlayerName(String name) {
+		return "";
+	}
+	
 	public static void loadConfig() {
 		try {
 			config.load(configFile);
@@ -177,6 +181,10 @@ public class CWRUCraft extends JavaPlugin {
 			}
 		}
 		return false;
+	}
+	
+	public static PlayerData getPlayerData(String name) {
+		return playerData.get(name);
 	}
 	
 }
