@@ -104,7 +104,7 @@ public class CWRUCraft extends JavaPlugin {
 		}
 	}
 	
-	public static void storePlayerData() {
+	public static void storePlayerData() throws Exception {
 		for(String key: playerData.keySet()) {
 			File tempPlayerFile = new File(playerDataDir, key + ".yml"); //Get filename
 			if(!tempPlayerFile.exists()) {
@@ -113,7 +113,7 @@ public class CWRUCraft extends JavaPlugin {
 			FileConfiguration tempPlayerConfig = new YamlConfiguration(); //Initialize temp config
 			tempPlayerConfig.set("Name", playerData.get(key).name); //Save name
 			tempPlayerConfig.set("CaseID", playerData.get(key).caseID); //Save caseid
-			tempPlayerConfig.set("Password",playerData.get(key).getPass()); //Save password
+			tempPlayerConfig.set("Password",decrypt(playerData.get(key).getEncPass().getBytes("UTF-8"))); //Save password
 			try {
 				tempPlayerConfig.save(tempPlayerFile); //Save file
 			} catch (IOException e) {
@@ -153,7 +153,7 @@ public class CWRUCraft extends JavaPlugin {
 	    return cipher.doFinal(plainText.getBytes("UTF-8"));
 	}
 	
-	public static String decrypt(byte[] cipherText) throws Exception{
+	private static String decrypt(byte[] cipherText) throws Exception{
 	    Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding", "SunJCE");
 	    SecretKeySpec key = new SecretKeySpec(encryptionKey.getBytes("UTF-8"), "AES");
 	    cipher.init(Cipher.DECRYPT_MODE, key,new IvParameterSpec(IV.getBytes("UTF-8")));
