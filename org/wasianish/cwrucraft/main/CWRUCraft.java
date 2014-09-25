@@ -19,6 +19,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
 
 public class CWRUCraft extends JavaPlugin {
 	
@@ -28,6 +29,8 @@ public class CWRUCraft extends JavaPlugin {
 	public static CListener loginListener;
 	private static String encryptionKey;
 	private static String IV = "AAAAAAAAAAAAAAAA";
+	
+	private static BukkitScheduler scheduler;
 	
 	private static File configFile;
 	private static File playerDataDir;
@@ -44,6 +47,7 @@ public class CWRUCraft extends JavaPlugin {
 		loginListener = new CListener();
 		this.getServer().getPluginManager().registerEvents(loginListener, this);
 		
+		scheduler = Bukkit.getServer().getScheduler();
 		
 		configFile = new File(getDataFolder(), "config.yml");
 		playerDataDir = new File(getDataFolder().getAbsolutePath() + File.separator + "PlayerData");
@@ -55,6 +59,8 @@ public class CWRUCraft extends JavaPlugin {
 		config = new YamlConfiguration();
 		loadConfig();
 		loadPlayerData();
+		
+		scheduler.scheduleSyncRepeatingTask(this, new LoginRegisterReminder(), 0L, 200L);
 	}
 	
 	public void onDisable() {

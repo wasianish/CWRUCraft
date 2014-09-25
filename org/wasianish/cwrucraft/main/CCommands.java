@@ -84,6 +84,7 @@ public class CCommands implements CommandExecutor {
 			break;
 		case "c":
 			if(!sender.isOp()) {
+				sender.sendMessage(ChatColor.RED + "You have to be OP to spy on my commands");
 				return true;
 			}
 			if(args[0].equals("on")) {
