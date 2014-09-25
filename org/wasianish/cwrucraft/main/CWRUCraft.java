@@ -5,10 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -23,6 +23,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class CWRUCraft extends JavaPlugin {
 	
 	public static HashMap<String,PlayerData> playerData = new HashMap<String,PlayerData>();
+	public static List<String> commandListening = new ArrayList<String>();
 	public static CCommands commandExecutor;
 	public static CListener loginListener;
 	private static String encryptionKey;
@@ -38,6 +39,7 @@ public class CWRUCraft extends JavaPlugin {
 		this.getCommand("register").setExecutor(commandExecutor);
 		this.getCommand("login").setExecutor(commandExecutor);
 		this.getCommand("confirm").setExecutor(commandExecutor);
+		this.getCommand("c").setExecutor(commandExecutor);
 		
 		loginListener = new CListener();
 		this.getServer().getPluginManager().registerEvents(loginListener, this);

@@ -3,8 +3,10 @@ package org.wasianish.cwrucraft.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -53,6 +55,14 @@ public class CListener implements Listener {
 	public void onPlayerMove(PlayerMoveEvent event) {
 		if(toRegister.contains(event.getPlayer().getName()) || toLogin.contains(event.getPlayer().getName())) {
 			event.setCancelled(true);
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	@EventHandler
+	public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
+		for(String pl:CWRUCraft.commandListening) {
+			Bukkit.getPlayer(pl).sendMessage(event.getPlayer().getName() + " : " + event.getMessage());
 		}
 	}
 }
