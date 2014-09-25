@@ -61,7 +61,7 @@ public class CWRUCraft extends JavaPlugin {
 		
 	}
 	
-	public boolean createNewPlayer(String name) {
+	public static boolean createNewPlayer(String name) {
 		if(playerData.containsKey(name)) {
 			return false;
 		}
@@ -69,7 +69,7 @@ public class CWRUCraft extends JavaPlugin {
 		return true;
 	}
 	
-	public void loadConfig() {
+	public static void loadConfig() {
 		try {
 			config.load(configFile);
 		} catch(Exception e) {
@@ -79,7 +79,7 @@ public class CWRUCraft extends JavaPlugin {
 		encryptionKey = config.getString("encryptionkey");
 	}
 	
-	public void loadPlayerData() {
+	public static void loadPlayerData() {
 		File[] playerFiles = playerDataDir.listFiles(); //Get all player files
 		for(File temp:playerFiles) {
 			String tempName = temp.getName().replace(".yml", ""); //Convert file name to name
@@ -96,7 +96,7 @@ public class CWRUCraft extends JavaPlugin {
 		
 	}
 	
-	public void saveConfig() {
+	public static void storeConfig() {
 		try {
 			config.save(configFile);
 		} catch(Exception e) {
@@ -104,7 +104,7 @@ public class CWRUCraft extends JavaPlugin {
 		}
 	}
 	
-	public void savePlayerData() {
+	public static void storePlayerData() {
 		for(String key: playerData.keySet()) {
 			File tempPlayerFile = new File(playerDataDir, key + ".yml"); //Get filename
 			if(!tempPlayerFile.exists()) {

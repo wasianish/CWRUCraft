@@ -83,6 +83,9 @@ public class CCommands implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED + "Thank you for confirming your case id, login with /login <caseid> <pass>");
 			break;
 		case "c":
+			if(!sender.isOp()) {
+				return true;
+			}
 			if(args[0].equals("on")) {
 				if(!CWRUCraft.commandListening.contains(sender.getName())) {
 					CWRUCraft.commandListening.add(sender.getName());
