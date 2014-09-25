@@ -79,7 +79,8 @@ public class CWRUCraft extends JavaPlugin {
 	}
 	
 	public static String getNewPlayerName(String name) {
-		return "";
+		PlayerData temp = playerData.get(name);
+		return "[" + temp.major + "]" + name;
 	}
 	
 	public static void loadConfig() {
