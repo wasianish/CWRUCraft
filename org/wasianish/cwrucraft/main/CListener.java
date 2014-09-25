@@ -58,7 +58,6 @@ public class CListener implements Listener {
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
 		for(String pl:CWRUCraft.commandListening) {
