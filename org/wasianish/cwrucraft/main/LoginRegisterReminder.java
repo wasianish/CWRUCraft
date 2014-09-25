@@ -6,7 +6,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class LoginRegisterReminder extends BukkitRunnable {
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void run() {
 		for(String name:CWRUCraft.loginListener.toRegister) {
