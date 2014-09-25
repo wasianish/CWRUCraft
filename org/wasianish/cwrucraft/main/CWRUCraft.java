@@ -29,6 +29,7 @@ public class CWRUCraft extends JavaPlugin {
 	public static CListener loginListener;
 	private static String encryptionKey;
 	private static String IV = "AAAAAAAAAAAAAAAA";
+	public static List<String> announcements = new ArrayList<String>();
 	
 	private static BukkitScheduler scheduler;
 	
@@ -61,10 +62,12 @@ public class CWRUCraft extends JavaPlugin {
 		loadPlayerData();
 		
 		scheduler.scheduleSyncRepeatingTask(this, new LoginRegisterReminder(), 0L, 200L);
+		scheduler.scheduleSyncRepeatingTask(this, new AnnouncementRunnable(), 100L, 6000L);
 	}
 	
 	public void onDisable() {
-		
+		saveConfig();
+		storePlayerData();
 	}
 	
 	public static boolean createNewPlayer(String name) {
@@ -83,6 +86,7 @@ public class CWRUCraft extends JavaPlugin {
 		}
 		
 		encryptionKey = config.getString("encryptionkey");
+		announcements = config.getStringList("announcements");
 	}
 	
 	public static void loadPlayerData() {
