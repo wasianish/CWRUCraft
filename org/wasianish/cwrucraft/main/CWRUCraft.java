@@ -78,7 +78,11 @@ public class CWRUCraft extends JavaPlugin {
 	
 	public void onDisable() {
 		saveConfig();
-		storePlayerData();
+		try {
+			storePlayerData();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static boolean createNewPlayer(String name) {
