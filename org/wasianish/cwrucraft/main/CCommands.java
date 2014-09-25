@@ -61,7 +61,7 @@ public class CCommands implements CommandExecutor {
 			CWRUCraft.playerData.get(sender.getName()).caseID = args[0];
 			CWRUCraft.playerData.get(sender.getName()).setPass(args[1]);
 			toConfirm.put(sender.getName(),confirm);
-			CWRUCraft.loginListener.hasRegistered(sender.getName());
+			CWRUCraft.loginListener.toRegister.remove(sender.getName());
 			CMailer.sendConfirm(args[0], confirm);
 			sender.sendMessage(ChatColor.GREEN + "Thank you for registering, please cheeck your case email for confirmation before logging in");
 			break;

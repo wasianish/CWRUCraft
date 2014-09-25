@@ -1,7 +1,9 @@
 package org.wasianish.cwrucraft.main;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -30,10 +32,12 @@ public class CWRUCraft extends JavaPlugin {
 	private static String encryptionKey;
 	private static String IV = "AAAAAAAAAAAAAAAA";
 	public static List<String> announcements = new ArrayList<String>();
+	public static List<String> majors = new ArrayList<String>();
 	
 	private static BukkitScheduler scheduler;
 	
 	private static File configFile;
+	private static File majorsFile;
 	private static File playerDataDir;
 	private static FileConfiguration config;
 	
@@ -49,6 +53,13 @@ public class CWRUCraft extends JavaPlugin {
 		this.getServer().getPluginManager().registerEvents(loginListener, this);
 		
 		scheduler = Bukkit.getServer().getScheduler();
+		
+		majorsFile = new File(getDataFolder(), "Majors.txt");
+		try {
+			loadMajorList();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		
 		configFile = new File(getDataFolder(), "config.yml");
 		playerDataDir = new File(getDataFolder().getAbsolutePath() + File.separator + "PlayerData");
@@ -80,7 +91,7 @@ public class CWRUCraft extends JavaPlugin {
 	
 	public static String getNewPlayerName(String name) {
 		PlayerData temp = playerData.get(name);
-		return "[" + temp.major + "]" + name;
+		return "[" + temp.major + "] " + name;
 	}
 	
 	public static void loadConfig() {
@@ -144,6 +155,10 @@ public class CWRUCraft extends JavaPlugin {
 			configFile.getParentFile().mkdirs();
 			copy(getResource("config.yml"), configFile);
 		}
+		if(!majorsFile.exists()) {
+			majorsFile.getParentFile().mkdirs();
+			copy(getResource("Majors.txt"), majorsFile);
+		}
 	}
 	
 	private void copy(InputStream in, File file) {
@@ -186,6 +201,20 @@ public class CWRUCraft extends JavaPlugin {
 	
 	public static PlayerData getPlayerData(String name) {
 		return playerData.get(name);
+	}
+	
+	private static void loadMajorList() throws Exception {
+		BufferedReader br = new BufferedReader(new FileReader(majorsFile.getAbsolutePath()));
+	    try {
+	        String line = br.readLine();
+
+	        while (line != null) {
+	        	majors.add(line);
+	            line = br.readLine();
+	        }
+	    } finally {
+	        br.close();
+	    }
 	}
 	
 }

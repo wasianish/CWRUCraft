@@ -17,16 +17,6 @@ public class CListener implements Listener {
 	public List<String> toLogin = new ArrayList<String>();
 	
 	
-	
-	public void hasRegistered(String name) {
-		toRegister.remove(name);
-	}
-	
-	public void hasLoggedIn(String name) {
-		toLogin.remove(name);
-	}
-	
-	
 	/*
 	 * When a player first queries the server
 	 */
