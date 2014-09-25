@@ -24,7 +24,7 @@ public class CListener implements Listener {
 	public void onPlayerLogin(PlayerLoginEvent event) {
 		if(!CWRUCraft.hasPlayed(event.getPlayer().getName())) {
 			toRegister.add(event.getPlayer().getName());
-			CWRUCraft.playerData.put(event.getPlayer().getName(), new PlayerData(event.getPlayer().getName()));
+			CWRUCraft.createNewPlayer(event.getPlayer().getName());
 		}
 	}
 	

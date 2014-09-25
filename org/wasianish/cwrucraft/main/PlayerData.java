@@ -22,7 +22,7 @@ public class PlayerData {
 		try {
 			password = javax.xml.bind.DatatypeConverter.printHexBinary(CWRUCraft.encrypt(password));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			password = "";
 			e.printStackTrace();
 		}
 	}
@@ -36,7 +36,7 @@ public class PlayerData {
 			}
 	}
 	
-	public String getPass() {
+	public String getEncPass() {
 		return password;
 	}
 	
