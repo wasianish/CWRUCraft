@@ -34,7 +34,7 @@ public class CMailer {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to + "@case.edu"));
 			message.setSubject("Welcome to CWRUCraft");
 			message.setText("Thank you for joining Case's only campus-wide, student run Minecraft server!\n\n"
-					+ "CWRUCraft is a place to procrastinate homework, relieve your boredom in class, and excersize your fingers while evading other murderous case students.\n"
+					+ "CWRUCraft is a place to procrastinate homework, relieve your boredom in class, and excersize your fingers while evading other murderous Case students.\n"
 					+ "Complete your registration by typing the command:\n\n"
 					+ " /confirm " + confirm + "\n\n"
 					+ "Don't forget to invite your friends!\n\n"
