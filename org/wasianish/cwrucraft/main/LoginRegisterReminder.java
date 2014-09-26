@@ -5,7 +5,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class LoginRegisterReminder extends BukkitRunnable {
-
 	@Override
 	public void run() {
 		for(String name:CWRUCraft.loginListener.toRegister) {
@@ -15,5 +14,4 @@ public class LoginRegisterReminder extends BukkitRunnable {
 			Bukkit.getPlayer(name).sendMessage(ChatColor.RED + "Login with /login <caseid> <password>");
 		}
 	}
-
 }
