@@ -8,6 +8,7 @@ public class AnnouncementRunnable extends BukkitRunnable {
 	
 	@Override
 	public void run() {
+		// Broadcast announcements
 		Bukkit.getServer().broadcastMessage(CWRUCraft.announcements.get(counter % CWRUCraft.announcements.size()));
 		counter++;
 	}

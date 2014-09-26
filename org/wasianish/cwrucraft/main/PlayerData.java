@@ -3,6 +3,7 @@ package org.wasianish.cwrucraft.main;
 
 public class PlayerData {
 	
+	// Fields
 	public String caseID;
 	private String password;
 	public String name;
@@ -14,10 +15,12 @@ public class PlayerData {
 		name = nam;
 	}
 	
+	// Set an already encrypted password
 	public void setEncrPass(String encPass) {
 		password = encPass;
 	}
 	
+	// Set a password to be encrypted
 	public void setPass(String pass) {
 		try {
 			password = javax.xml.bind.DatatypeConverter.printHexBinary(CWRUCraft.encrypt(password));
@@ -27,6 +30,7 @@ public class PlayerData {
 		}
 	}
 	
+	// Check pass
 	public boolean isPass(String pass) {
 			try {
 				return (javax.xml.bind.DatatypeConverter.printHexBinary(CWRUCraft.encrypt(pass)).equals(password));
@@ -36,12 +40,9 @@ public class PlayerData {
 			}
 	}
 	
+	// Get the encrypted pass
 	public String getEncPass() {
 		return password;
-	}
-	
-	public boolean hasRegistered() {
-		return (caseID != null && password != null);
 	}
 	
 }

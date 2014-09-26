@@ -11,20 +11,23 @@ import javax.mail.internet.MimeMessage;
 
 public class CMailer {
 	public static void sendConfirm(String to, String confirm) {
+		// Set system properties for mail client
 		Properties properties = System.getProperties();
 		properties.put("mail.smtp.auth", "true");
 		properties.put("mail.smtp.starttls.enable", "true");
 		properties.put("mail.smtp.host", "smtp.gmail.com");
 		properties.put("mail.smtp.port", "587");
 		
+		// Login to email
 		Session session = Session.getInstance(properties,
 			new javax.mail.Authenticator() {
 		       	protected PasswordAuthentication getPasswordAuthentication() {
-		       		return new PasswordAuthentication("cwrucraft@gmail.com", "allofit.");
+		       		return new PasswordAuthentication("cwrucraft@gmail.com", CWRUCraft.emailPass);
 	            }
 			}
 		);
 		
+		// The message
 		MimeMessage message = new MimeMessage(session);
 		try {
 			message.setFrom(new InternetAddress("cwrucraft@gmail.com"));
@@ -39,6 +42,7 @@ public class CMailer {
 					+ "   -The CWRUCraft Team\n\n"
 					+ "P.S. Since this server is running off of a sketchy computer in my dorm room, the ip address is subject to change.  We will use this email to communicate ip changes and other noteworthy news.\n\n"
 					+ "     Interested in how this works, how to get involved, or just to talk? Email us and we'll get in touch");
+			// Send message
 			Transport.send(message);
 		} catch(Exception e) {
 			e.printStackTrace();
