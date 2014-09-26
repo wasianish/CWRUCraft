@@ -1,5 +1,6 @@
 package org.wasianish.cwrucraft.main;
 
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.ChatColor;
@@ -74,7 +75,7 @@ public class CCommands implements CommandExecutor {
 			CMailer.sendConfirm(args[0], confirm);
 			// Send player message
 			sender.sendMessage(ChatColor.GREEN + "Thank you for registering, please cheeck your case email for confirmation before logging in");
-			break;
+			return true;
 		// Command is /confirm <confirmstring>
 		case "confirm":
 			// Check if allowed to confirm
@@ -97,7 +98,7 @@ public class CCommands implements CommandExecutor {
 			CWRUCraft.toLogin.add(sender.getName());
 			// Send player message
 			sender.sendMessage(ChatColor.RED + "Thank you for confirming your case id, login with /login <caseid> <pass>");
-			break;
+			return true;
 		// Command is /c <on|off>
 		case "c":
 			// Check op
@@ -115,9 +116,32 @@ public class CCommands implements CommandExecutor {
 					CWRUCraft.commandListening.remove(sender.getName());
 				}
 			}
-			break;
+			return true;
+		case "major":
+			List<String> matches = CWRUCraft.findMajor(concat(args));
+			if(matches.size() == 1) {
+				CWRUCraft.playerData.get(sender.getName()).major = matches.get(0);
+				sender.sendMessage(ChatColor.GREEN + "Successfully set major to " + matches.get(0));
+			} else if (matches.size() > 1) {
+				sender.sendMessage(ChatColor.YELLOW + "Found many matches for: " + concat(args));
+				for(String temp:matches) {
+					sender.sendMessage(ChatColor.YELLOW + "  - " + temp);
+				}
+			} else {
+				sender.sendMessage(ChatColor.RED + "No matches found for: " + concat(args));
+			}
+			return true;
 		}
 		return false;
+	}
+	
+	private String concat(String[] in) {
+		String out = "";
+		for(String a:in) {
+			out += (a + " ");
+		}
+		out = out.substring(0, out.length()-1);
+		return out;
 	}
 
 }

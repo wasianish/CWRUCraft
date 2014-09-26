@@ -77,6 +77,7 @@ public class CWRUCraft extends JavaPlugin {
 		this.getCommand("login").setExecutor(commandExecutor);
 		this.getCommand("confirm").setExecutor(commandExecutor);
 		this.getCommand("c").setExecutor(commandExecutor);
+		this.getCommand("major").setExecutor(commandExecutor);
 		
 		// Register event listener
 		loginListener = new CListener();
@@ -260,6 +261,21 @@ public class CWRUCraft extends JavaPlugin {
 	        br.close();
 	    } catch(Exception e) {
 	    }
+	}
+	
+	public static List<String> findMajor(String in) {
+		List<String> matches = new ArrayList<String>();
+		for(String temp:majors) {
+			if(temp.equalsIgnoreCase(in)) {
+				matches.removeAll(matches);
+				matches.add(temp);
+				break;
+			}
+			if(temp.toLowerCase().contains(in.toLowerCase())) {
+				matches.add(temp);
+			}
+		}
+		return matches;
 	}
 	
 }
