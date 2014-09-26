@@ -120,7 +120,7 @@ public class CCommands implements CommandExecutor {
 		case "major":
 			List<String> matches = CWRUCraft.findMajor(concat(args));
 			if(matches.size() == 1) {
-				CWRUCraft.playerData.get(sender.getName()).major = matches.get(0);
+				CWRUCraft.playerData.get(sender.getName()).major = CWRUCraft.majors.get(matches.get(0));
 				sender.sendMessage(ChatColor.GREEN + "Successfully set major to " + matches.get(0));
 			} else if (matches.size() > 1) {
 				sender.sendMessage(ChatColor.YELLOW + "Found many matches for: " + concat(args));
@@ -129,6 +129,7 @@ public class CCommands implements CommandExecutor {
 				}
 			} else {
 				sender.sendMessage(ChatColor.RED + "No matches found for: " + concat(args));
+				sender.sendMessage(ChatColor.RED + "Maybe search for a keyword");
 			}
 			return true;
 		}

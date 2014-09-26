@@ -1,39 +1,38 @@
-Accounting
-Aerospace Engineering
+Accounting	Acct
+Aerospace Engineering	Aero
 American Studies
-Anthropology
-Applied Mathematics
-Art Education
-Art History
+Anthropology	Anthro
+Applied Mathematics	Applied Math
+Art Education	Art Edu
+Art History	Art Hist
 Art Studio
-Artificial Intelligence
+Artificial Intelligence	AI
 Asian Studies
-Astronomy
-Banking and Finance
-Biochemistry
-Biology
-Biomedical Engineering
-Business Management
-Chemical Biology
-Chemical Engineering
-Chemistry
+Astronomy	Astro
+Banking and Finance	Finance
+Biochemistry	Biochem
+Biology	Bio
+Biomedical Engineering	BME
+Business Management	Business
+Chemical Biology	Chem Bio
+Chemical Engineering	Chem E
+Chemistry	Chem
 Childhood Studies
-Chinese
-Civil Engineering
+Chinese	
+Civil Engineering	Civil E
 Classics
-Cognitive Science
+Cognitive Science	Cog Sci
 Communication Sciences
-Computer Engineering
+Computer Engineering	CE
 Computer Gaming
-Computer Science
-Computer Science
+Computer Science	CS
 Creative Writing
 Dance 
-Economics
-Electrical Engineering
+Economics	Econ
+Electrical Engineering	EE
 Electronics
-Engineering
-Engineering Physics
+Engineering	Engr
+Engineering Physics	Engr Phys
 English
 Entrepreneurial Studies
 Environmental Geology
@@ -59,10 +58,10 @@ Japanese Studies
 Judaic Studies
 Leadership
 Marketing
-Materials Science and Engineering
-Mathematics
+Materials Science and Engineering	Materials
+Mathematics	Math
 Mathematics and Physics
-Mechanical Engineering
+Mechanical Engineering	Mech E
 Mechanical Design and Manufacturing
 Music
 Music Education
@@ -71,9 +70,9 @@ Nursing
 Nutrition
 Nutritional Biochemistry and Metabolism
 Philosophy
-Physics
+Physics	Phys
 Political Science
-Polymer Science and Engineering
+Polymer Science and Engineering	Polymers
 PreArchitecture
 Psychology
 Public Policy

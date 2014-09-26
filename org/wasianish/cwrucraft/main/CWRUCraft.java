@@ -47,7 +47,7 @@ public class CWRUCraft extends JavaPlugin {
 	public static List<String> announcements = new ArrayList<String>();
 	
 	// Stores all possible majors at case
-	public static List<String> majors = new ArrayList<String>();
+	public static HashMap<String,String> majors = new HashMap<String,String>();
 	
 	// Scheduler for scheduling
 	private static BukkitScheduler scheduler;
@@ -255,7 +255,11 @@ public class CWRUCraft extends JavaPlugin {
 	        String line = br.readLine(); 
 
 	        while (line != null) { // Loop to read each line
-	        	majors.add(line);
+	        	String temp = line.split("\t")[0];
+	        	if(line.split("\t").length == 2) {
+	        		temp = line.split("/t")[1];
+	        	}
+	        	majors.put(line.split("\t")[0], temp);
 	            line = br.readLine();
 	        }
 	        br.close();
@@ -263,9 +267,11 @@ public class CWRUCraft extends JavaPlugin {
 	    }
 	}
 	
+	// Finds exact match, many matches, or no matches
 	public static List<String> findMajor(String in) {
 		List<String> matches = new ArrayList<String>();
-		for(String temp:majors) {
+		for(String temp:majors.keySet()) {
+			temp = temp.split("\t")[0];
 			if(temp.equalsIgnoreCase(in)) {
 				matches.removeAll(matches);
 				matches.add(temp);
