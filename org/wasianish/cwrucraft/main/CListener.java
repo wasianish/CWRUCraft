@@ -1,13 +1,12 @@
 package org.wasianish.cwrucraft.main;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 public class CListener implements Listener {
@@ -18,16 +17,11 @@ public class CListener implements Listener {
 	 */
 	@EventHandler
 	public void onPlayerLogin(PlayerLoginEvent event) {
-		// Check IP
-		for(Player temp:Bukkit.getOnlinePlayers()) {
-			if(event.getAddress().getHostAddress().equals(temp.getAddress().getAddress().getHostAddress())) {
-				event.disallow(Result.KICK_OTHER, "Same IP already on server");
-			}
-		}
 		// If first time
 		if(!Bukkit.getOfflinePlayer(event.getPlayer().getName()).hasPlayedBefore()) {
 			// Add to register
 			CWRUCraft.toRegister.add(event.getPlayer().getName());
+			Bukkit.getServer().getLogger().info(event.getPlayer().getName() + " to register");
 			// Create player data
 			CWRUCraft.createNewPlayer(event.getPlayer().getName());
 		}
@@ -40,9 +34,16 @@ public class CListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		// If doesnt need to register
 		if(!CWRUCraft.toRegister.contains(event.getPlayer().getName())) {
+			Bukkit.getServer().getLogger().info(event.getPlayer().getName() + " to login");
 			CWRUCraft.toLogin.add(event.getPlayer().getName());
 		}
 	}
+	
+	@EventHandler
+	public void onPlayerChat(AsyncPlayerChatEvent event) {
+		event.setFormat(CWRUCraft.updatedPlayerName(event.getPlayer().getName()) + " : " + event.getMessage());
+	}
+	
 	
 	/*
 	 * When a player moves

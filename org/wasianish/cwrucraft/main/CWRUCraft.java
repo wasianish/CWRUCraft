@@ -15,6 +15,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,6 +28,9 @@ public class CWRUCraft extends JavaPlugin {
 	
 	// Stores the names of players to push the command logger to
 	public static List<String> commandListening = new ArrayList<String>();
+	
+	// Stores the special majors
+	public static String[] goodMajors = {"EE", "CE", "CS"};
 	
 	// Instance of CCommands
 	public static CCommands commandExecutor;
@@ -127,9 +131,18 @@ public class CWRUCraft extends JavaPlugin {
 	}
 	
 	// Add a prefix to peoples names
-	public static String getNewPlayerName(String name) {
+	public static String updatedPlayerName(String name) {
 		PlayerData temp = playerData.get(name);
-		return "[" + temp.major + "] " + name;
+		if(temp.major == "") {
+			return name;
+		} else {
+			for(int i = 0; i < goodMajors.length; i++) {
+				if(temp.major.equals(goodMajors[i])) {
+					return "[" + ChatColor.GREEN + temp.major + ChatColor.RESET + "] " + name;
+				}
+			}
+			return "[" + ChatColor.DARK_AQUA + temp.major + ChatColor.RESET + "] " + name;
+		}
 	}
 	
 	// Load the config and store values
@@ -147,6 +160,9 @@ public class CWRUCraft extends JavaPlugin {
 	
 	// Load player data from file
 	public static void loadPlayerData() {
+		if(!playerDataDir.exists()) {
+			playerDataDir.mkdirs();
+		}
 		File[] playerFiles = playerDataDir.listFiles(); //Get all player files
 		for(File temp:playerFiles) {
 			String tempName = temp.getName().replace(".yml", ""); //Convert file name to name
@@ -159,6 +175,7 @@ public class CWRUCraft extends JavaPlugin {
 			playerData.put(tempName, new PlayerData(tempName)); //Create new player data in hashmap
 			playerData.get(tempName).caseID = tempPlayerData.getString("CaseID"); //Get caseID
 			playerData.get(tempName).setEncrPass(tempPlayerData.getString("Password")); //Get password
+			playerData.get(tempName).major = tempPlayerData.getString("Major");
 		}
 		
 	}
@@ -178,13 +195,14 @@ public class CWRUCraft extends JavaPlugin {
 		for(String key: playerData.keySet()) {
 			File tempPlayerFile = new File(playerDataDir, key + ".yml"); //Get filename
 			if(!tempPlayerFile.exists()) {
-				tempPlayerFile.mkdirs(); //Create missing directories
+				tempPlayerFile.getParentFile().mkdirs(); //Create missing directories
 			}
 			FileConfiguration tempPlayerConfig = new YamlConfiguration(); //Initialize temp config
 			try {
 				tempPlayerConfig.set("Name", playerData.get(key).name); //Save name
 				tempPlayerConfig.set("CaseID", playerData.get(key).caseID); //Save caseid
-				tempPlayerConfig.set("Password",decrypt(playerData.get(key).getEncPass().getBytes("UTF-8"))); //Save password
+				tempPlayerConfig.set("Password",playerData.get(key).getEncPass()); //Save password
+				tempPlayerConfig.set("Major", playerData.get(key).major);
 				tempPlayerConfig.save(tempPlayerFile); //Save file
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -227,26 +245,28 @@ public class CWRUCraft extends JavaPlugin {
 	// AES encryption
 	public static byte[] encrypt(String plainText) {
 		try {
-		    Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding", "SunJCE");
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding", "SunJCE");
 		    SecretKeySpec key = new SecretKeySpec(encryptionKey.getBytes("UTF-8"), "AES");
 		    cipher.init(Cipher.ENCRYPT_MODE, key,new IvParameterSpec(IV.getBytes("UTF-8")));
 		    return cipher.doFinal(plainText.getBytes("UTF-8"));
 		} catch(Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
 	
 	// AES decryption
-	private static String decrypt(byte[] cipherText) {
+	/*private static String decrypt(byte[] cipherText) {
 		try {
-		    Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding", "SunJCE");
+		    Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding", "SunJCE");
 		    SecretKeySpec key = new SecretKeySpec(encryptionKey.getBytes("UTF-8"), "AES");
 		    cipher.init(Cipher.DECRYPT_MODE, key,new IvParameterSpec(IV.getBytes("UTF-8")));
 		    return new String(cipher.doFinal(cipherText),"UTF-8");
 		} catch(Exception e) {
+			e.printStackTrace();
 			return null;
 		}
-	}
+	}*/
 	
 	// Load the list of majors
 	private static void loadMajorList() {
@@ -257,13 +277,14 @@ public class CWRUCraft extends JavaPlugin {
 	        while (line != null) { // Loop to read each line
 	        	String temp = line.split("\t")[0];
 	        	if(line.split("\t").length == 2) {
-	        		temp = line.split("/t")[1];
+	        		temp = line.split("\t")[1];
 	        	}
 	        	majors.put(line.split("\t")[0], temp);
 	            line = br.readLine();
 	        }
 	        br.close();
 	    } catch(Exception e) {
+	    	e.printStackTrace();
 	    }
 	}
 	
@@ -282,6 +303,10 @@ public class CWRUCraft extends JavaPlugin {
 			}
 		}
 		return matches;
+	}
+	
+	public void info(String s) {
+		getLogger().info(s);
 	}
 	
 }

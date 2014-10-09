@@ -8,7 +8,7 @@ public class PlayerData {
 	private String password;
 	public String name;
 	public boolean isFinal = false;
-	public String major;
+	public String major = "";
 	public int year;
 	
 	public PlayerData (String nam) {
@@ -23,7 +23,7 @@ public class PlayerData {
 	// Set a password to be encrypted
 	public void setPass(String pass) {
 		try {
-			password = javax.xml.bind.DatatypeConverter.printHexBinary(CWRUCraft.encrypt(password));
+			password = javax.xml.bind.DatatypeConverter.printHexBinary(CWRUCraft.encrypt(pass));
 		} catch (Exception e) {
 			password = "";
 			e.printStackTrace();

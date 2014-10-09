@@ -1,0 +1,16 @@
+name: CWRUCraft
+main: org.wasianish.cwrucraft.main.CWRUCraft
+version: 0.1
+description: Handles authentication and other things
+author: Anno van den Akker
+commands:
+  register:
+    usage: /<command> <caseid> <pass> <pass>
+  login:
+    usage: /<command> <pass>
+  confirm:
+    usage: /<command> <comfirm string>
+  c:
+    usage: /<command> <on|off>
+  major:
+    usage: /<command> <major>
