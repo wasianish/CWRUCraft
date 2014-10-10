@@ -7,7 +7,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 
 public class CListener implements Listener {
 	
@@ -24,6 +23,7 @@ public class CListener implements Listener {
 			Bukkit.getServer().getLogger().info(event.getPlayer().getName() + " to register");
 			// Create player data
 			CWRUCraft.createNewPlayer(event.getPlayer().getName());
+			CWRUCraft.cantDoShit.add(event.getPlayer().getName());
 		}
 	}
 	
@@ -35,6 +35,9 @@ public class CListener implements Listener {
 		// If doesnt need to register
 		if(!CWRUCraft.toRegister.contains(event.getPlayer().getName())) {
 			Bukkit.getServer().getLogger().info(event.getPlayer().getName() + " to login");
+			CWRUCraft.clearedInventory.put(event.getPlayer().getName(), CWRUCraft.copyInventory(event.getPlayer().getInventory()));
+			CWRUCraft.loginLocs.put(event.getPlayer().getName(), event.getPlayer().getLocation());
+			event.getPlayer().getInventory().clear();
 			CWRUCraft.toLogin.add(event.getPlayer().getName());
 		}
 	}
@@ -44,16 +47,15 @@ public class CListener implements Listener {
 		event.setFormat(CWRUCraft.updatedPlayerName(event.getPlayer().getName()) + " : " + event.getMessage());
 	}
 	
-	
 	/*
 	 * When a player moves
 	 */
-	@EventHandler
+/*	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
 		if(CWRUCraft.toRegister.contains(event.getPlayer().getName()) || CWRUCraft.toLogin.contains(event.getPlayer().getName())) {
 			event.setCancelled(true);
 		}
-	}
+	}*/
 	
 	@EventHandler
 	public void onPlayerCommand(PlayerCommandPreprocessEvent event) {

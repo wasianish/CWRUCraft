@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class CCommands implements CommandExecutor {
 	
@@ -32,10 +33,12 @@ public class CCommands implements CommandExecutor {
 			// Check pass
 			if(CWRUCraft.playerData.get(sender.getName()).isPass(args[0])) {
 				CWRUCraft.toLogin.remove(sender.getName());
+				CWRUCraft.copyToInventory(CWRUCraft.clearedInventory.get(sender.getName()), ((Player) sender).getInventory());
+				CWRUCraft.clearedInventory.remove(sender.getName());
 			} else {
 				sender.sendMessage(ChatColor.RED + "Wrong password");
 			}
-			break;
+			return true;
 			
 		// Command is /register <caseid> <pass> <pass>
 		case "register":

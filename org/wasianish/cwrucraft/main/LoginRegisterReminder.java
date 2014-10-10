@@ -9,11 +9,15 @@ public class LoginRegisterReminder extends BukkitRunnable {
 	public void run() {
 		for(String name:CWRUCraft.toRegister) {
 			// Remind to register
-			Bukkit.getPlayer(name).sendMessage(ChatColor.RED + "Register with /register <caseid> <newpass> <confirmpass>");
+			try {
+				Bukkit.getPlayer(name).sendMessage(ChatColor.RED + "Register with /register <caseid> <newpass> <confirmpass>");
+			} catch(Exception e) {}
 		}
 		for(String name:CWRUCraft.toLogin) {
 			// Remind to login
-			Bukkit.getPlayer(name).sendMessage(ChatColor.RED + "Login with /login <caseid> <password>");
+			try {
+				Bukkit.getPlayer(name).sendMessage(ChatColor.RED + "Login with /login <caseid> <password>");
+			} catch(Exception e) {}
 		}
 	}
 }

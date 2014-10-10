@@ -16,8 +16,11 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
@@ -28,6 +31,15 @@ public class CWRUCraft extends JavaPlugin {
 	
 	// Stores the names of players to push the command logger to
 	public static List<String> commandListening = new ArrayList<String>();
+	
+	// Can't do shit
+	public static List<String> cantDoShit = new ArrayList<String>();
+	
+	// Player Locations
+	public static HashMap<String,Location> loginLocs = new HashMap<String,Location>();
+	
+	// Cleared player inventories
+	public static HashMap<String,ItemStack[]> clearedInventory = new HashMap<String,ItemStack[]>();
 	
 	// Stores the special majors
 	public static String[] goodMajors = {"EE", "CE", "CS"};
@@ -113,6 +125,7 @@ public class CWRUCraft extends JavaPlugin {
 		// Schedule tasks
 		scheduler.scheduleSyncRepeatingTask(this, new LoginRegisterReminder(), 0L, 200L);
 		scheduler.scheduleSyncRepeatingTask(this, new AnnouncementRunnable(), 100L, 6000L);
+		scheduler.scheduleSyncRepeatingTask(this, new ResetPlayerRunnable(), 0L, 20L);
 	}
 	
 	public void onDisable() {
@@ -138,7 +151,7 @@ public class CWRUCraft extends JavaPlugin {
 		} else {
 			for(int i = 0; i < goodMajors.length; i++) {
 				if(temp.major.equals(goodMajors[i])) {
-					return "[" + ChatColor.GREEN + temp.major + ChatColor.RESET + "] " + name;
+					return "[" + ChatColor.GOLD + temp.major + ChatColor.RESET + "] " + name;
 				}
 			}
 			return "[" + ChatColor.DARK_AQUA + temp.major + ChatColor.RESET + "] " + name;
@@ -303,6 +316,20 @@ public class CWRUCraft extends JavaPlugin {
 			}
 		}
 		return matches;
+	}
+	
+	public static ItemStack[] copyInventory(PlayerInventory p) {
+		ItemStack[] out = new ItemStack[36];
+		for(int i = 0; i < 36; i++) {
+			out[i] = p.getItem(i);
+		}
+		return out;
+	}
+	
+	public static void copyToInventory(ItemStack[] is, PlayerInventory p) {
+		for(int i = 0; i < 36; i++) {
+			p.setItem(i, is[i]);
+		}
 	}
 	
 	public void info(String s) {
